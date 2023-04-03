@@ -1,11 +1,14 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import { LoginPage } from './pages';
+import MainRouter from './routes/mainRouter';
 
 export default function App() {
   return (
-    <ChakraProvider>
-      <LoginPage />
-    </ChakraProvider>
+    <BrowserRouter>
+      <ChakraProvider>
+        <MainRouter />
+      </ChakraProvider>
+    </BrowserRouter>
   );
 }
