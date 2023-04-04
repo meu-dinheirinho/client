@@ -2,11 +2,12 @@
 import React, { useContext, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SessionContext } from '../context';
+// page
+import { NotFoundPage } from '../pages';
 // routes
 import PubRouter from './pubRouter';
 // style
-import './styles.module.css';
-import { NotFoundPage } from '../pages';
+import styles from './styles.module.css';
 
 /**
  * TenantSwitcher
@@ -19,7 +20,7 @@ export default function MainRouter() {
   const [logged, setLogged] = useState(!!token);
 
   return (
-    <div className={'container'}>
+    <div className={styles.container}>
       <Routes>
         {logged ? (
           <Route path={'*'} element={(<NotFoundPage />)()} />
