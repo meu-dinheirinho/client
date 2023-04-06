@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { Route, Routes } from 'react-router-dom';
 // pages
 import { LoginPage, RecoveryPage, RegisterPage } from '../pages';

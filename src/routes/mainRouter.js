@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-fragments */
 import React, { useContext, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SessionContext } from '../context';
