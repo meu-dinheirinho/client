@@ -10,9 +10,9 @@ import {
 } from '@chakra-ui/react';
 import { EXTRA_MENU_ITEMS, MENU_ITEMS } from '../../../constants/menu.app';
 import { Logo } from '../../../components';
-import SidebarItem from './SidebarItem';
+import { SidebarItem } from './SidebarItem';
 
-export default function SidebarContent({
+export function SidebarContent({
   menuItems,
   onClose,
   ...rest

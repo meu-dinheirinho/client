@@ -5,8 +5,8 @@ import {
   DrawerContent,
   useDisclosure,
 } from '@chakra-ui/react';
-import SidebarContent from './Sidebar/SidebarContent';
-import MobileNav from './Sidebar/MobileNav';
+import { SidebarContent } from './Sidebar/Content';
+import { MobileNav } from './Sidebar/MobileNav';
 
 export default function MainLayout({ children }) {
   // control sidebar status (open or close)

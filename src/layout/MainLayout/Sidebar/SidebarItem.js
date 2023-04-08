@@ -8,7 +8,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { activeStyles } from './commons';
 import Details from './Details';
 
-export default function SidebarItem({
+export function SidebarItem({
   icon,
   children,
   path,
@@ -29,7 +29,7 @@ export default function SidebarItem({
     >
       <Flex
         align="center"
-        py="4"
+        py="1"
         role="group"
         cursor="pointer"
         _hover={route.pathname.replace('/', '') === path ? {

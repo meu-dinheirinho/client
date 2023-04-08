@@ -7,7 +7,7 @@ import {
 import { FiMenu } from 'react-icons/fi';
 import { Logo } from '../../../components';
 
-export default function MobileNav({ onOpen, ...rest }) {
+export function MobileNav({ onOpen, ...rest }) {
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
