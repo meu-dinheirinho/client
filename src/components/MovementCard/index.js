@@ -8,7 +8,12 @@ import React from 'react';
 import styles from './styles.module.css';
 
 export default function MovementCard({
-  value, description, typeMovement, Movement = 'in', type, date,
+  value,
+  description,
+  typeMovement,
+  Movement = 'in',
+  type,
+  date,
 }) {
   return (
     <Center bg="#f9f9f9" borderRadius="10" className={styles.box}>

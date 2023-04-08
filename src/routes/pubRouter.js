@@ -7,7 +7,7 @@ import {
 import RedirectRouter from './RedirectRouter';
 import { LayoutLogin } from '../layout';
 
-export default function TenantPubRouter() {
+export default function PubRouter() {
   return (
     <LayoutLogin>
       <Routes>
