@@ -1,0 +1,19 @@
+.AccountBox {
+  padding: 24px 30px;
+  font-family: var(--primary);
+}
+
+.AccountContent {
+  width: 285px;
+  border-bottom: 1px solid #9698AB;
+}
+
+.AccountTitle {
+  font-weight: var(--bold);
+  color: var(--purple-900) !important;
+}
+
+.AccountText {
+  font-weight: var(--regular);
+  color: var(--gray-600);
+}

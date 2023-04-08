@@ -1,0 +1,21 @@
+.box {
+  padding: 10px 9px;
+  font-family: var(--primary);
+  font-weight: var(--regular);
+}
+
+.movementTitle {
+  color: var(--gray-700);
+}
+
+.movementDescription {
+  color: var(--gray-600);
+}
+
+.in{
+  background-color: var(--green-opacity);
+}
+
+.out{
+  background-color: var(--orange-opacity);
+}

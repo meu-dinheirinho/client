@@ -1,0 +1,14 @@
+.totals {
+  padding: 25px 15px 10px;
+  font-family: var(--primary);
+}
+
+.totalsTitle {
+  font-weight: var(--regular);
+  color: var(--gray-600);
+}
+
+.totalsSubTitle {
+  font-weight: var(--bold);
+  color: var(--purple-900);
+}

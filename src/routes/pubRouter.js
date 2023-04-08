@@ -1,6 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 // pages
-import { LoginPage, RecoveryPage, RegisterPage } from '../pages';
+import {
+  LoginPage, RecoveryPage, RegisterPage, ComponentPage,
+} from '../pages';
 // style
 import RedirectRouter from './RedirectRouter';
 import { LayoutLogin } from '../layout';
@@ -13,6 +15,7 @@ export default function TenantPubRouter() {
         <Route path={'login'} element={(<LoginPage />)} />
         <Route path={'register'} element={(<RegisterPage />)} />
         <Route path={'recovery'} element={(<RecoveryPage />)} />
+        <Route path={'components'} element={(<ComponentPage />)} />
         {/* request recovery password */}
         {/* confirm recovery password */}
         {/* 404 */}
