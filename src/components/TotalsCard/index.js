@@ -11,7 +11,7 @@ export default function TotalsCard({
   title, value, color, url, progress, percentage,
 }) {
   return (
-    <Box className={styles.totals} border="1px solid var(--gray-200)" borderRadius="10" bg="white">
+    <Box className={styles.totals} border="1px solid var(--gray-200)" borderRadius="10">
       <Flex mb="24px" h="45px">
         <Circle size="45px" bg={color} mb="24" color="white">
           <img src={url} alt="" />
