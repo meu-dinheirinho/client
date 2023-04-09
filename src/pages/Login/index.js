@@ -41,12 +41,11 @@ export default function LoginPage() {
           <Box />
         </Flex>
       </Hide>
-      <Flex p={8} flex={1} align={'center'} justify={'center'}>
+      <Flex flex={1.5} align={'center'} justify={'center'}>
         <Stack spacing={10} width={'100%'}>
           <Heading as={'h3'} size={'lg'}>
             Login
           </Heading>
-
           <Formik
             initialValues={initialValues}
             validationSchema={authSchema}
@@ -122,7 +121,7 @@ export default function LoginPage() {
                   <Text align={'center'}>
                     Ou
                   </Text>
-                  <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+                  <Button w={'full'} size={'lg'} variant={'outline'} leftIcon={<FcGoogle />}>
                     <Center>
                       <Text>Entre com Google</Text>
                     </Center>
@@ -135,7 +134,7 @@ export default function LoginPage() {
             <Text align={'center'}>
               Não tem uma conta? &nbsp;
               <Link
-                href={'/#'}
+                href={'register'}
                 color={'blue.400'}
               >
                 Cadastre-se

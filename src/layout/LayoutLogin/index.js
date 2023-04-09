@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Box,
   Flex,
   Stack,
   Text,
@@ -26,10 +25,10 @@ export default function LayoutLogin({
       <Flex alignItems={'center'} justifyContent={'start'}>
         <Logo />
       </Flex>
-      <Box flex={1}>
+      <Flex alignItems={'center'} justifyContent={'center'}>
         {children}
-      </Box>
-      <Flex h={'3vh'} alignItems="center" justifyContent="end">
+      </Flex>
+      <Flex h={'3vh'} alignItems={'center'} justifyContent={'end'}>
         <Text
           onClick={toggleColorMode}
           w="fit-content"
