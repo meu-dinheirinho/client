@@ -1,6 +1,6 @@
 import {
   Box,
-  Center, Flex, Spacer, Square, Text,
+  Center, Flex, Spacer, Square, Text, useColorModeValue,
 } from '@chakra-ui/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
@@ -16,7 +16,7 @@ export default function MovementCard({
   date,
 }) {
   return (
-    <Center bg="#f9f9f9" borderRadius="10" className={styles.box}>
+    <Center bg={useColorModeValue('var(--white-200)', 'var(--purple-opacity)')} borderRadius="10" className={styles.box}>
       {Movement === 'out' ? (
         <Square w="38px" h="38px" mr="9px" display={type === 3 && 'none'} className={styles.out} borderRadius="3">
           <Text> </Text>

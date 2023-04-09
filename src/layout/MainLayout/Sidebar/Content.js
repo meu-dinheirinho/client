@@ -7,7 +7,10 @@ import {
   Box,
   Grid,
   GridItem,
+  useColorMode,
+  Button,
 } from '@chakra-ui/react';
+import { BsSun, BsMoonStarsFill } from 'react-icons/bs';
 import { EXTRA_MENU_ITEMS, MENU_ITEMS } from '../../../constants/menu.app';
 import { Logo } from '../../../components';
 import { SidebarItem } from './SidebarItem';
@@ -17,6 +20,7 @@ export function SidebarContent({
   onClose,
   ...rest
 }) {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -66,6 +70,17 @@ export function SidebarContent({
               {link.name}
             </SidebarItem>
           ))}
+          <Flex h="20" alignItems="center" mx="8" justifyContent="center">
+            <Button
+              aria-label="Toggle Color Mode"
+              onClick={toggleColorMode}
+              _focus={{ boxShadow: 'none' }}
+              w="fit-content"
+              {...rest}
+            >
+              {colorMode === 'light' ? <BsMoonStarsFill /> : <BsSun />}
+            </Button>
+          </Flex>
         </GridItem>
       </Grid>
     </Box>

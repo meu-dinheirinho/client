@@ -1,0 +1,11 @@
+.detailsMenuActive {
+  margin-right: 1rem;
+  transform: translateX(0);
+  transition: transform 1s ease;
+}
+
+.detailsMenuNormal {
+  margin-right: 1rem;
+  transform: translateX(-15px);
+  transition: transform 0.3s ease;
+}
