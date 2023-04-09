@@ -8,6 +8,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { BsMoonStarsFill, BsSun } from 'react-icons/bs';
+import { Logo } from '../../components';
 // styles
 
 export default function LayoutLogin({
@@ -18,13 +19,17 @@ export default function LayoutLogin({
   return (
     <Stack
       px={8}
+      my={3}
       bg={useColorModeValue('white', 'gray.900')}
-      minH="100vh"
+      minH="90vh"
     >
-      <Box h={'90vh'} flex={1}>
+      <Flex alignItems={'center'} justifyContent={'start'}>
+        <Logo />
+      </Flex>
+      <Box flex={1}>
         {children}
       </Box>
-      <Flex h={'5vh'} alignItems="center" mx="8" justifyContent="end">
+      <Flex h={'3vh'} alignItems="center" justifyContent="end">
         <Text
           onClick={toggleColorMode}
           w="fit-content"
