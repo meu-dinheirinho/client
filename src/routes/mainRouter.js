@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-// import { SessionContext } from '../context';
+import { SessionContext } from '../context';
 // routes
 import PrivRouter from './privRouter';
 // style
 import styles from './styles.module.css';
+import PubRouter from './pubRouter';
 
 /**
  * MainSwitcher
  */
 export default function MainRouter() {
   // context
-  // const { token } = useContext(SessionContext);
+  const { token } = useContext(SessionContext);
   // internal state
   // eslint-disable-next-line no-unused-vars
-  const [logged, setLogged] = useState(true);
+  const [logged, setLogged] = useState(!!token);
 
   return (
     <div className={styles.container}>
@@ -22,7 +23,7 @@ export default function MainRouter() {
         {logged ? (
           <Route path={'/*'} element={(<PrivRouter />)} />
         ) : (
-          <Route path={'/as'} element={(<PrivRouter />)} />
+          <Route path={'/*'} element={(<PubRouter />)} />
         )}
       </Routes>
     </div>

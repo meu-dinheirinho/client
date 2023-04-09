@@ -1,11 +1,13 @@
-import MovementCard from './MovementCard';
 import AccountCard from './AccountCard';
-import TotalsCard from './TotalsCard';
+import FormInput from './Input';
 import Logo from './Logo';
+import MovementCard from './MovementCard';
+import TotalsCard from './TotalsCard';
 
 export {
-  MovementCard,
   AccountCard,
-  TotalsCard,
+  FormInput,
   Logo,
+  MovementCard,
+  TotalsCard,
 };
