@@ -18,23 +18,20 @@ export default function LayoutLogin({
   return (
     <Stack
       px={8}
-      my={3}
       bg={useColorModeValue('white', 'gray.900')}
-      minH="90vh"
+      h={'100vh'}
     >
-      <Flex alignItems={'center'} justifyContent={'start'}>
+      <Flex mt={3} alignItems={'center'} justifyContent={'space-between'}>
         <Logo />
-      </Flex>
-      <Flex alignItems={'center'} justifyContent={'center'}>
-        {children}
-      </Flex>
-      <Flex h={'3vh'} alignItems={'center'} justifyContent={'end'}>
         <Text
           onClick={toggleColorMode}
           w="fit-content"
         >
           {colorMode === 'light' ? <BsMoonStarsFill /> : <BsSun />}
         </Text>
+      </Flex>
+      <Flex flex={1} alignItems={'center'} justifyContent={'center'}>
+        {children}
       </Flex>
     </Stack>
   );
