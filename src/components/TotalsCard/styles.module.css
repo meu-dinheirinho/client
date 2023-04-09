@@ -12,3 +12,15 @@
   font-weight: var(--bold);
   color: var(--purple-900);
 }
+
+.progress {
+  width: 200px;
+  height: 7px;
+  background-color: #ECEDF1;
+  border-radius: 5px;
+}
+
+.imagesTotals {
+  width: auto;
+  height: 15px;
+}

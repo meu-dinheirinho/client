@@ -1,0 +1,14 @@
+.simple {
+  padding: 18px 22px 20px;
+  font-family: var(--primary);
+}
+
+.simpleTitle {
+  font-weight: var(--regular);
+  color: var(--gray-600);
+}
+
+.simpleSubTitle {
+  font-weight: var(--bold);
+  color: var(--purple-900);
+}
