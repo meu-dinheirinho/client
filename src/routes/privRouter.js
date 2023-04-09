@@ -5,12 +5,13 @@ import {
 } from '../pages';
 // layout
 import { MainLayout } from '../layout';
+import RedirectRouter from './RedirectRouter';
 
 export default function PrivRouter() {
   return (
     <MainLayout>
       <Routes>
-        {/* login stack */}
+        <Route path={''} element={(<RedirectRouter path={'dashboard'} />)} />
         <Route path={'dashboard'} element={(<ComponentPage />)} />
         <Route path={'book-entry'} element={(<ComponentPage />)} />
         <Route path={'my-wallet'} element={(<ComponentPage />)} />
