@@ -1,6 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import { useState } from 'react';
 import { Formik } from 'formik';
+import { FcGoogle } from 'react-icons/fc';
 import {
   Box,
   FormControl,
@@ -11,6 +12,9 @@ import {
   Flex,
   Heading,
   Hide,
+  Text,
+  Center,
+  Image,
 } from '@chakra-ui/react';
 import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
 import { authSchema, initialValues } from './schemas';
@@ -25,9 +29,15 @@ export default function LoginPage() {
   }
 
   return (
-    <Flex h={'90vh'} alignItems={'center'} justifyContent={'center'} gap={26}>
+    <Flex h={'85vh'} alignItems={'center'} justifyContent={'center'} gap={26}>
       <Hide below={'md'}>
-        <Flex flex={2}>
+        <Flex h={'85vh'} alignItems={'center'} justifyContent={'center'} flex={2}>
+          <Image
+            alt={'Login Image'}
+            objectFit={'contain'}
+            h={'100%'}
+            src={'/hero.png'}
+          />
           <Box />
         </Flex>
       </Hide>
@@ -94,7 +104,7 @@ export default function LoginPage() {
                     <Link href={'/#'} color={'var(--purple-900)'}>Esqueceu a senha?</Link>
                   </Stack>
                 </Stack>
-                <Stack spacing={10}>
+                <Stack spacing={6}>
                   <Button
                     className={styles.button}
                     disabled={isSubmitting}
@@ -109,10 +119,29 @@ export default function LoginPage() {
                   >
                     Entrar
                   </Button>
+                  <Text align={'center'}>
+                    Ou
+                  </Text>
+                  <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+                    <Center>
+                      <Text>Entre com Google</Text>
+                    </Center>
+                  </Button>
                 </Stack>
               </Stack>
             )}
           </Formik>
+          <Stack pt={6}>
+            <Text align={'center'}>
+              Não tem uma conta? &nbsp;
+              <Link
+                href={'/#'}
+                color={'blue.400'}
+              >
+                Cadastre-se
+              </Link>
+            </Text>
+          </Stack>
         </Stack>
       </Flex>
     </Flex>
