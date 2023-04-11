@@ -1,0 +1,11 @@
+.svg {
+  postition: absolute;
+  transform: rotate(-80deg);
+}
+
+.svgCircle {
+  fill: none;
+  stroke-width: 7px;
+  stroke-dasharray: 472;
+  stroke-dashoffset: 330;
+}

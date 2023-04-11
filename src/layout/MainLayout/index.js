@@ -6,6 +6,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { SidebarContent } from './Sidebar/Content';
+import { DrawerSideContent } from './Drawer/Content';
 import { MobileNav } from './Sidebar/MobileNav';
 
 export default function MainLayout({ children }) {
@@ -32,6 +33,7 @@ export default function MainLayout({ children }) {
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
+      <DrawerSideContent />
       <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} py="4">
         {children}
