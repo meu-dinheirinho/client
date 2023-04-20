@@ -4,6 +4,7 @@ import Logo from './Logo';
 import MovementCard from './MovementCard';
 import TotalsCard from './TotalsCard';
 import SimpleCard from './SimpleCard';
+import Title from './Tilte';
 
 export {
   AccountCard,
@@ -12,4 +13,5 @@ export {
   MovementCard,
   TotalsCard,
   SimpleCard,
+  Title,
 };

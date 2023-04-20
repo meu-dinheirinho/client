@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SessionContext } from '../context';
@@ -15,7 +16,7 @@ export default function MainRouter() {
   const { token } = useContext(SessionContext);
   // internal state
   // eslint-disable-next-line no-unused-vars
-  const [logged, setLogged] = useState(!!token);
+  const [logged, setLogged] = useState(true);
 
   return (
     <div className={styles.container}>

@@ -21,11 +21,18 @@ import { authSchema, initialValues } from './schemas';
 import { FormInput } from '../../components';
 import styles from './styles.module.css';
 
-export default function LoginPage() {
+export default function LoginPage({
+  // propagates on auth events
+  onSuccess,
+}) {
   const [hidePassword, setHidePassord] = useState(true);
 
   function handlePasswordInputVisibility() {
     setHidePassord(!hidePassword);
+  }
+
+  function handleCreateAuth() {
+    if (onSuccess) onSuccess();
   }
 
   return (
@@ -50,7 +57,7 @@ export default function LoginPage() {
             initialValues={initialValues}
             validationSchema={authSchema}
             onSubmit={(values) => {
-              console.log(values);
+              handleCreateAuth(values);
             }}
           >
             {({

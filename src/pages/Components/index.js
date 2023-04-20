@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex } from '@chakra-ui/react';
 import styles from './styles.module.css';
 import {
-  AccountCard, MovementCard, SimpleCard, TotalsCard,
+  AccountCard, MovementCard, SimpleCard, Title, TotalsCard,
 } from '../../components';
 
 import icon1 from '../../images/icon1.png';
@@ -12,6 +12,7 @@ import icon3 from '../../images/icon3.png';
 export default function ComponentPage() {
   return (
     <div className={styles.teste}>
+      <Title title={'Dashboard'} description={'descrição da pagina'} />
       <Flex direction="column" gap={3}>
         type = 1
         <MovementCard value="80,90" description="Adobe Photo Shop" typeMovement="mensal" Movement="in" type={1} />
