@@ -1,19 +1,21 @@
 import AccountCard from './AccountCard';
 import FormInput from './Input';
+import Header from './Header';
 import Logo from './Logo';
-import User from './User';
 import MovementCard from './MovementCard';
-import TotalsCard from './TotalsCard';
 import SimpleCard from './SimpleCard';
 import Title from './Tilte';
+import TotalsCard from './TotalsCard';
+import User from './User';
 
 export {
   AccountCard,
   FormInput,
+  Header,
   Logo,
-  User,
   MovementCard,
-  TotalsCard,
   SimpleCard,
   Title,
+  TotalsCard,
+  User,
 };

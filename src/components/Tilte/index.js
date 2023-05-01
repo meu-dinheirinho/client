@@ -1,4 +1,4 @@
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box, Text, useColorModeValue } from '@chakra-ui/react';
 import styles from './styles.module.css';
 
 export default function Title({
@@ -8,9 +8,9 @@ export default function Title({
   description,
 }) {
   return (
-    <Box md={{ '.title': { color: useColorModeValue('red', 'white') } }}>
-      <h1 className={styles.title}>{title}</h1>
-      <p className={styles.description}>{description}</p>
+    <Box>
+      <Text color={useColorModeValue('#51459E', '#ffffff')} className={styles.title}>{title}</Text>
+      <Text color={useColorModeValue('#9A9A9A', '#ffffff')} className={styles.description}>{description}</Text>
     </Box>
   );
 }
