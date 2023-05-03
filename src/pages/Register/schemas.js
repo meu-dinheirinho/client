@@ -4,6 +4,7 @@ export const initialValues = {
   email: '',
   name: '',
   password: '',
+  phone: '',
   confirmPassword: '',
 };
 

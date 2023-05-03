@@ -7,12 +7,16 @@ import {
 import RedirectRouter from './RedirectRouter';
 import { LayoutLogin } from '../layout';
 
-export default function PubRouter() {
+export default function PubRouter({ onSuccess }) {
+  function handleLogin(token) {
+    if (onSuccess) onSuccess(token);
+  }
+
   return (
     <LayoutLogin>
       <Routes>
         {/* login stack */}
-        <Route path={'login'} element={(<LoginPage />)} />
+        <Route path={'login'} element={(<LoginPage onSuccess={(token) => handleLogin(token)} />)} />
         <Route path={'register'} element={(<RegisterPage />)} />
         <Route path={'recovery'} element={(<RecoveryPage />)} />
         <Route path={'components'} element={(<ComponentPage />)} />

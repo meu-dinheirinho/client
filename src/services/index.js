@@ -1,5 +1,5 @@
-import TestService from './teste';
+import AuthService from './auth';
 
 export {
-  TestService,
+  AuthService,
 };

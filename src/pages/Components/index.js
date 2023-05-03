@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Flex } from '@chakra-ui/react';
 import styles from './styles.module.css';
 import {
@@ -12,21 +11,8 @@ import {
 import icon1 from '../../images/icon1.png';
 import icon2 from '../../images/icon2.png';
 import icon3 from '../../images/icon3.png';
-import { TestService } from '../../services';
 
 export default function ComponentPage() {
-  function handleConnection() {
-    const testeService = new TestService();
-    testeService.testeConn().then((dat) => {
-      console.log('>>>>>>', dat);
-    });
-  }
-
-  useEffect(() => {
-    console.log('>>>>>  1');
-    handleConnection();
-  }, []);
-
   return (
     <div className={styles.teste}>
       <Header title={'Dashboard'} description={'Bem-vindo de volta, vamos economizar hoje.'} searchDescription={'Pesquise no Dashboard'} />

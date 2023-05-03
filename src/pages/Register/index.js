@@ -55,6 +55,35 @@ export default function RegisterPage() {
           }) => (
             <Stack spacing={22}>
               <Wrap spacing={8}>
+              <HStack>
+                  <FormControl>
+                    <FormInput
+                      size={'lg'}
+                      type={'text'}
+                      placeholder={'Nome'}
+                      variant={'filled'}
+                      name={'name'}
+                      value={values.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      errorMsg={touched.name && errors.name}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormInput
+                      size={'lg'}
+                      type={'email'}
+                      placeholder={'Seu melhor email'}
+                      variant={'filled'}
+                      name={'email'}
+                      id={'email'}
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      errorMsg={touched.email && errors.email}
+                    />
+                  </FormControl>
+                </HStack>
                 <HStack>
                   <FormControl>
                     <FormInput
@@ -83,6 +112,22 @@ export default function RegisterPage() {
                       errorMsg={touched.email && errors.email}
                     />
                   </FormControl>
+                   <HStack>
+                  <FormControl>
+                    <FormInput
+                      size={'lg'}
+                      type={'email'}
+                      placeholder={'Seu melhor email'}
+                      variant={'filled'}
+                      name={'email'}
+                      id={'email'}
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      errorMsg={touched.email && errors.email}
+                    />
+                  </FormControl>
+                </HStack>
                 </HStack>
               </Wrap>
               <Stack spacing={4}>

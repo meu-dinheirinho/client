@@ -13,10 +13,15 @@ import PubRouter from './pubRouter';
  */
 export default function MainRouter() {
   // context
-  const { token } = useContext(SessionContext);
+  const { tkn } = useContext(SessionContext);
   // internal state
   // eslint-disable-next-line no-unused-vars
-  const [logged, setLogged] = useState(true);
+  const [logged, setLogged] = useState(false);
+
+  function login(token) {
+    console.log(token);
+    setLogged(!!token);
+  }
 
   return (
     <div className={styles.container}>
@@ -24,7 +29,7 @@ export default function MainRouter() {
         {logged ? (
           <Route path={'/*'} element={(<PrivRouter />)} />
         ) : (
-          <Route path={'/*'} element={(<PubRouter />)} />
+          <Route path={'/*'} element={(<PubRouter onSuccess={(token) => login(token)} />)} />
         )}
       </Routes>
     </div>

@@ -20,6 +20,7 @@ import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
 import { authSchema, initialValues } from './schemas';
 import { FormInput } from '../../components';
 import styles from './styles.module.css';
+import AuthService from '../../services/auth';
 
 export default function LoginPage({
   // propagates on auth events
@@ -31,8 +32,12 @@ export default function LoginPage({
     setHidePassord(!hidePassword);
   }
 
-  function handleCreateAuth() {
-    if (onSuccess) onSuccess();
+  function handleCreateAuth(usrData) {
+    const authService = new AuthService();
+    authService.login(usrData).then((data) => {
+      console.log(data);
+      if (onSuccess) onSuccess(data);
+    });
   }
 
   return (
