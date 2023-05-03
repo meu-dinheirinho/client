@@ -55,7 +55,7 @@ export default function RegisterPage() {
           }) => (
             <Stack spacing={22}>
               <Wrap spacing={8}>
-              <HStack>
+                <HStack>
                   <FormControl>
                     <FormInput
                       size={'lg'}
@@ -83,20 +83,6 @@ export default function RegisterPage() {
                       errorMsg={touched.email && errors.email}
                     />
                   </FormControl>
-                  {/* <FormControl>
-                    <FormInput
-                      size={'lg'}
-                      type={'number'}
-                      placeholder={'Seu telefone'}
-                      variant={'filled'}
-                      name={'phone'}
-                      id={'phone'}
-                      value={values.phone}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      errorMsg={touched.phone && errors.phone}
-                    />
-                  </FormControl> */}
                 </HStack>
               </Wrap>
               <Stack spacing={4}>
