@@ -83,51 +83,20 @@ export default function RegisterPage() {
                       errorMsg={touched.email && errors.email}
                     />
                   </FormControl>
-                </HStack>
-                <HStack>
-                  <FormControl>
+                  {/* <FormControl>
                     <FormInput
                       size={'lg'}
-                      type={'text'}
-                      placeholder={'Nome'}
+                      type={'number'}
+                      placeholder={'Seu telefone'}
                       variant={'filled'}
-                      name={'name'}
-                      value={values.name}
+                      name={'phone'}
+                      id={'phone'}
+                      value={values.phone}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      errorMsg={touched.name && errors.name}
+                      errorMsg={touched.phone && errors.phone}
                     />
-                  </FormControl>
-                  <FormControl>
-                    <FormInput
-                      size={'lg'}
-                      type={'email'}
-                      placeholder={'Seu melhor email'}
-                      variant={'filled'}
-                      name={'email'}
-                      id={'email'}
-                      value={values.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      errorMsg={touched.email && errors.email}
-                    />
-                  </FormControl>
-                   <HStack>
-                  <FormControl>
-                    <FormInput
-                      size={'lg'}
-                      type={'email'}
-                      placeholder={'Seu melhor email'}
-                      variant={'filled'}
-                      name={'email'}
-                      id={'email'}
-                      value={values.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      errorMsg={touched.email && errors.email}
-                    />
-                  </FormControl>
-                </HStack>
+                  </FormControl> */}
                 </HStack>
               </Wrap>
               <Stack spacing={4}>
