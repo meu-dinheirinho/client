@@ -3,6 +3,7 @@ import NotFoundPage from './NotFound';
 import RecoveryPage from './Recovery';
 import RegisterPage from './Register';
 import ComponentPage from './Components';
+import Wallet from './Wallet';
 
 export {
   LoginPage,
@@ -10,4 +11,5 @@ export {
   RecoveryPage,
   RegisterPage,
   ComponentPage,
+  Wallet,
 };
