@@ -13,21 +13,53 @@ import {
   Center,
   HStack,
   Wrap,
+  useToast,
 } from '@chakra-ui/react';
 import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
 import { initialValues, registerSchema } from './schemas';
 import { FormInput } from '../../components';
 import styles from './styles.module.css';
+import useLoading from '../../hooks/loading';
+import AuthService from '../../services/auth';
 
 export default function RegisterPage() {
   const [hidePassword, setHidePassord] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
+  const [loading, start, done] = useLoading();
+  const toast = useToast();
+
   function handlePasswordInputVisibility() {
     setHidePassord(!hidePassword);
   }
 
   function handleConfirmPasswordInputVisibility() {
     setHideConfirmPassword(!hideConfirmPassword);
+  }
+
+  function handleRegisterUser(userData) {
+    start();
+    const authService = new AuthService();
+    authService.store(userData).then(() => {
+      toast({
+        title: 'Registro',
+        description: 'Usário cadastrado com sucesso',
+        status: 'sucess',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    }).catch((error) => {
+      toast({
+        title: 'Registro',
+        description: `Ocorreu um erro ao cadastrar usuário ${error}`,
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    }).finally(() => {
+      done();
+    });
   }
 
   return (
@@ -41,7 +73,7 @@ export default function RegisterPage() {
           initialValues={initialValues}
           validationSchema={registerSchema}
           onSubmit={(values) => {
-            console.log(values);
+            handleRegisterUser(values);
           }}
         >
           {({
@@ -72,19 +104,35 @@ export default function RegisterPage() {
                   <FormControl>
                     <FormInput
                       size={'lg'}
-                      type={'email'}
-                      placeholder={'Seu melhor email'}
+                      type={'number'}
+                      placeholder={'Telefone'}
                       variant={'filled'}
-                      name={'email'}
-                      id={'email'}
-                      value={values.email}
+                      name={'phone'}
+                      id={'phone'}
+                      value={values.phone}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      errorMsg={touched.email && errors.email}
+                      errorMsg={touched.phone && errors.phone}
                     />
                   </FormControl>
                 </HStack>
               </Wrap>
+              <Stack>
+                <FormControl>
+                  <FormInput
+                    size={'lg'}
+                    type={'email'}
+                    placeholder={'Seu melhor email'}
+                    variant={'filled'}
+                    name={'email'}
+                    id={'email'}
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errorMsg={touched.email && errors.email}
+                  />
+                </FormControl>
+              </Stack>
               <Stack spacing={4}>
                 <HStack>
                   <FormInput
@@ -97,10 +145,10 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     errorMsg={touched.password && errors.password}
-                    sufixElement={hidePassword
+                    suffixElement={hidePassword
                       ? (<HiOutlineEyeSlash />)
                       : (<HiOutlineEye />)}
-                    onSufixClick={() => handlePasswordInputVisibility()}
+                    onSuffixClick={() => handlePasswordInputVisibility()}
                   />
                   <FormInput
                     size={'lg'}
@@ -112,17 +160,18 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     errorMsg={touched.confirmPassword && errors.confirmPassword}
-                    sufixElement={hideConfirmPassword
+                    suffixElement={hideConfirmPassword
                       ? (<HiOutlineEyeSlash />)
                       : (<HiOutlineEye />)}
-                    onSufixClick={() => handleConfirmPasswordInputVisibility()}
+                    onSuffixClick={() => handleConfirmPasswordInputVisibility()}
                   />
                 </HStack>
               </Stack>
               <Stack spacing={6}>
                 <Button
                   className={styles.button}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || loading}
+                  isLoading={loading}
                   type={'submit'}
                   bg={'var(--purple)'}
                   color={'white'}
