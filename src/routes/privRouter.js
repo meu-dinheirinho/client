@@ -14,10 +14,8 @@ export default function PrivRouter() {
         <Route path={''} element={(<RedirectRouter path={'dashboard'} />)} />
         <Route path={'dashboard'} element={(<ComponentPage />)} />
         <Route path={'book-entry'} element={(<ComponentPage />)} />
-        <Route path={'my-wallet'} element={(<ComponentPage />)} />
-        <Route path={'accounts'} element={(<Wallet />)} />
         <Route path={'my-wallet'} element={(<MyWalletComponent />)} />
-        <Route path={'accounts'} element={(<ComponentPage />)} />
+        <Route path={'accounts'} element={(<Wallet />)} />
         {/* 404 */}
         <Route path={'*'} element={(<NotFoundPage />)} />
       </Routes>
