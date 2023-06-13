@@ -1,10 +1,11 @@
 import {
+  useContext,
   useEffect, useRef, useState,
 } from 'react';
 import {
   Button, Flex, Grid, GridItem, HStack, Modal, ModalBody,
   ModalCloseButton, ModalContent, ModalFooter, ModalHeader,
-  ModalOverlay, Stack, useDisclosure,
+  ModalOverlay, Stack, useDisclosure, useToast,
 } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import { AddIcon } from '@chakra-ui/icons';
@@ -19,6 +20,8 @@ import { sortByProperty } from '../../utils';
 import { creditCardSchema, initialValues } from './schemas';
 import { CARD_NUMBER_PATTERN } from '../../constants';
 import useLoading from '../../hooks/loading';
+import { SessionContext } from '../../context/session';
+import { CreditCardService } from '../../services';
 // //  TODO: REMOVER
 // const mockedData = [
 //   {
@@ -67,9 +70,12 @@ export default function MyWalletComponent() {
   const [accountList, setAccountList] = useState([]);
   const [brandOptionsList, setBrandOptionsList] = useState([]);
   const [loading, start, done] = useLoading();
+  // hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
+  const toast = useToast();
+  const { token } = useContext(SessionContext);
 
   // TODO: ALTERAR PARA REQUISIÇÃO
   // const refresh = useCallback((data) => {
@@ -101,47 +107,94 @@ export default function MyWalletComponent() {
 
   function store(data) {
     start();
-    // TODO: ALTERAR PARA REQUISIÇÃO
-    setAccountList((prev) => {
-      const previousData = [...prev];
-      const lastElement = previousData[previousData.length - 1];
-
-      if (lastElement) {
-        const newData = { id: lastElement.id + 1, ...data };
-        previousData.push(newData);
-        return previousData;
-      }
-
-      const newData = { id: 1, ...data };
-      previousData.push(newData);
-      return previousData;
+    const creditCardService = new CreditCardService(token);
+    creditCardService.store(data).then(() => {
+      toast({
+        title: 'Tudo Certo',
+        description: 'Cartão salvo com sucesso',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    }).catch(() => {
+      toast({
+        title: 'Ocorre um problema ao salvar o cartão',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     });
     done();
     onClose();
   }
 
+  function update(data) {
+    start();
+    const creditCardService = new CreditCardService(token);
+    creditCardService.store(data).then(() => {
+      toast({
+        title: 'Tudo Certo',
+        description: 'Cartão salvo com sucesso',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    }).catch(() => {
+      toast({
+        title: 'Ocorre um problema ao salvar o cartão',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    });
+    done();
+    onClose();
+  }
+
+  function handleSubmitData(data) {
+    return data.id ? update(data) : store(data);
+  }
+
   return (
-    <div className={styles.teste}>
+    <div className={styles.container}>
       <Header
         title={'Minha Carteira'}
         description={'Veja o status  dos seus cartões'}
         searchDescription={'Pesquise na carteira'}
       />
-      <CreditCard
-        accounts={accountList}
-        onSelectedCard={(accountId) => handleSelectCard(accountId)}
-      />
-      <HStack>
-        <Button leftIcon={<AddIcon />} onClick={onOpen}>
-          Adicionar cartão
-        </Button>
-      </HStack>
+      <Grid
+        flex="1"
+        overflowY="auto"
+        templateRows={'4fr auto'}
+        templateColumns={'1fr 3fr'}
+        gap={4}
+      >
+        <GridItem>
+          <CreditCard
+            accounts={accountList}
+            onSelectedCard={(accountId) => handleSelectCard(accountId)}
+          />
+        </GridItem>
+        <GridItem rowSpan={2} />
+        <GridItem>
+          <Flex align={'center'} justify={'center'} height={'100%'}>
+            <Button leftIcon={<AddIcon />} onClick={onOpen}>
+              Adicionar cartão
+            </Button>
+          </Flex>
+        </GridItem>
+      </Grid>
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         size={'4xl'}
         isOpen={isOpen}
         onClose={onClose}
+        isCentered
       >
         <ModalOverlay />
         <ModalContent>
@@ -154,7 +207,7 @@ export default function MyWalletComponent() {
                   initialValues={initialValues}
                   validationSchema={creditCardSchema}
                   onSubmit={(values) => {
-                    store(values);
+                    handleSubmitData(values);
                   }}
                 >
                   {({
@@ -168,7 +221,7 @@ export default function MyWalletComponent() {
                   }) => (
                     <>
                       <Stack spacing={10}>
-                        <Grid templateColumns="repeat(3, 1fr)" gap={3}>
+                        <Grid templateColumns={['1fr 1fr', '1fr 1fr', '1fr 1fr 1fr']} gap={3}>
                           <GridItem>
                             <FormInput
                               size={'lg'}
@@ -211,10 +264,6 @@ export default function MyWalletComponent() {
                               errorMsg={touched.flag && errors.flag}
                             />
                           </GridItem>
-                        </Grid>
-                      </Stack>
-                      <Stack spacing={10}>
-                        <Grid templateColumns="repeat(3, 1fr)" gap={3}>
                           <GridItem>
                             <FormInput
                               size={'lg'}
