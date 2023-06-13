@@ -21,7 +21,7 @@ export function ContextProvider({ children }) {
     }));
   };
 
-  const contextValue = useMemo(() => ({ data, updateData }), [data]);
+  const contextValue = useMemo(() => ({ ...data, updateData }), [data]);
 
   useEffect(() => {
     setCookieToken(JSON.stringify(data));

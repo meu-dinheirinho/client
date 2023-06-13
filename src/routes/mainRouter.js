@@ -16,8 +16,7 @@ export default function MainRouter() {
   // navigation
   const navigate = useNavigate();
   // context
-  const { data, updateData } = useContext(SessionContext);
-  const { token } = data;
+  const { token, updateData } = useContext(SessionContext);
 
   // internal state
   const [logged, setLogged] = useState(!!token);
