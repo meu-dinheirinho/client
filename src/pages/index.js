@@ -4,6 +4,7 @@ import RecoveryPage from './Recovery';
 import RegisterPage from './Register';
 import ComponentPage from './Components';
 import Wallet from './Wallet';
+import MyWalletComponent from './MyWallet';
 
 export {
   LoginPage,
@@ -12,4 +13,5 @@ export {
   RegisterPage,
   ComponentPage,
   Wallet,
+  MyWalletComponent,
 };

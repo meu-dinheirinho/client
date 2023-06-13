@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 // pages
 import {
-  ComponentPage, NotFoundPage, Wallet,
+  ComponentPage, Wallet, MyWalletComponent, NotFoundPage,
 } from '../pages';
 // layout
 import { MainLayout } from '../layout';
@@ -16,6 +16,8 @@ export default function PrivRouter() {
         <Route path={'book-entry'} element={(<ComponentPage />)} />
         <Route path={'my-wallet'} element={(<ComponentPage />)} />
         <Route path={'accounts'} element={(<Wallet />)} />
+        <Route path={'my-wallet'} element={(<MyWalletComponent />)} />
+        <Route path={'accounts'} element={(<ComponentPage />)} />
         {/* 404 */}
         <Route path={'*'} element={(<NotFoundPage />)} />
       </Routes>

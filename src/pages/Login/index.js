@@ -15,28 +15,51 @@ import {
   Text,
   Center,
   Image,
+  useToast,
 } from '@chakra-ui/react';
 import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
 import { authSchema, initialValues } from './schemas';
 import { FormInput } from '../../components';
 import styles from './styles.module.css';
 import AuthService from '../../services/auth';
+import useLoading from '../../hooks/loading';
 
 export default function LoginPage({
   // propagates on auth events
   onSuccess,
 }) {
   const [hidePassword, setHidePassord] = useState(true);
+  const [loading, start, done] = useLoading();
+  const toast = useToast();
 
   function handlePasswordInputVisibility() {
     setHidePassord(!hidePassword);
   }
 
   function handleCreateAuth(usrData) {
+    start();
     const authService = new AuthService();
     authService.login(usrData).then((data) => {
-      console.log(data);
       if (onSuccess) onSuccess(data);
+      toast({
+        title: 'Login',
+        description: 'Bem vindo!',
+        status: 'sucess',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    }).catch(() => {
+      toast({
+        title: 'Login',
+        description: 'Usuário ou senha inválido',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    }).finally(() => {
+      done();
     });
   }
 
@@ -101,10 +124,10 @@ export default function LoginPage({
                     onChange={handleChange}
                     onBlur={handleBlur}
                     errorMsg={touched.password && errors.password}
-                    sufixElement={hidePassword
+                    suffixElement={hidePassword
                       ? (<HiOutlineEyeSlash />)
                       : (<HiOutlineEye />)}
-                    onSufixClick={() => handlePasswordInputVisibility()}
+                    onSuffixClick={() => handlePasswordInputVisibility()}
                   />
                   <Stack
                     direction={{ base: 'column', sm: 'row' }}
@@ -118,7 +141,8 @@ export default function LoginPage({
                 <Stack spacing={6}>
                   <Button
                     className={styles.button}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || loading}
+                    isLoading={loading}
                     type={'submit'}
                     bg={'var(--purple)'}
                     color={'white'}

@@ -1,0 +1,135 @@
+.mainContainer {
+  width: 22.25rem;
+  height: 13.0625rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0;
+  border: 0.125rem solid rgba(255, 255, 255, 0.2);
+  background: #5F5F5F;
+  border-radius: 0.625rem;
+  backdrop-filter: blur(0.3125rem);
+  -webkit-backdrop-filter: blur(0.3125rem);
+  padding: 0.625rem;
+  transition: 0.4s ease-out;
+}
+
+.mainContainer .logo {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  overflow: hidden;
+}
+
+.mainContainer .logo img {
+  height: 3.5rem;
+}
+
+.mainContainer .chip {
+  padding: 0.625rem;
+  /* margin: 0.9375rem 0; */
+}
+
+.mainContainer .chip img {
+  height: 2.8125rem;
+}
+
+.mainContainer .chip p {
+  font-size: 1.6875rem;
+  font-weight: bold;
+  padding: 0.625rem 0;
+  letter-spacing: 0.125rem;
+  color: #ffffff;
+}
+
+.mainContainer .cardInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.625rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+
+.secondaryContainer {
+  width: 20.0625rem;
+  height: 10.6875rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0;
+  border-radius: 0.625rem;
+  padding: 0.625rem;
+  background: rgba(255, 255, 255, 0.17);
+  border-radius: 0.625rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.37);
+  position: relative;
+  top: 60px;
+  transition: 0.4s ease-out;
+}
+
+.secondaryContainer .logo {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  overflow: hidden;
+}
+
+.secondaryContainer .logo img {
+  height: 3.5rem;
+}
+
+.secondaryContainer .chip {
+  padding: 0.325rem;
+  /* margin: 0.9375rem 0; */
+}
+
+.secondaryContainer .chip img {
+  height: 1.8125rem;
+}
+
+.secondaryContainer .chip p {
+  font-size: 1.4375rem;
+  font-weight: bold;
+  padding: 0.325rem 0;
+  letter-spacing: 0.125rem;
+  color: #212121;
+}
+
+.secondaryContainer .cardInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.625rem;
+  font-weight: bold;
+  color: #212121;
+}
+
+.containerCards .secondaryContainer:not(:first-child) {
+  margin-top: -130px;
+}
+
+.containerCards .secondaryContainer:hover:not(:last-child) {
+  transform: translateY(-50px);
+  transition: 0.4s ease-out;
+}
+
+.secondaryContainer:hover:not(:last-child) {
+  transform: translateY(-50px);
+  transition: 0.4s ease-out;
+}
+
+.containerCards .secondaryContainer:hover ~ .secondaryContainer {
+  position: relative;
+  top: 80px;
+  transition: 0.4s ease-out;
+}
+
+.containerCards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+}

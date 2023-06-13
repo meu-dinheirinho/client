@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import Title from '../Tilte';
+import Title from '../Title';
 import BoxSearch from './boxSearch';
 
 export default function Header({

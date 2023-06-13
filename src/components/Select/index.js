@@ -1,34 +1,27 @@
 import {
   FormControl,
-  Input,
   InputGroup,
-  InputRightElement,
+  Select,
   Text,
 } from '@chakra-ui/react';
 
-export default function FormInput({
+export default function FormSelectInput({
   // set form name to input
   name = '',
   // set placeholder of input text, number, area, etc
   placeholder = '',
   // set value to input
   value = '',
+  // set options  list
+  options = [],
   // set input size
   size = 'lg',
   // set error to input
   errorMsg,
-  // set suffix element to input
-  suffixElement,
-  // set prefix element to input
-  prefixElement,
   // propagate on native blur event
   onBlur,
   // propagate on native change event
   onChange,
-  // propagate on suffix click event
-  onSuffixClick,
-  // propagate on prefix click event
-  onPrefixClick,
   // others props
   ...rest
 }) {
@@ -46,29 +39,19 @@ export default function FormInput({
   return (
     <FormControl>
       <InputGroup size={size}>
-        {prefixElement ? (
-          <InputRightElement
-            onClick={onSuffixClick}
-          >
-            {prefixElement}
-          </InputRightElement>
-        ) : null}
-        <Input
+        <Select
           {...rest}
+          placeholder={placeholder}
           size={size}
           name={name}
-          placeholder={placeholder}
           value={value}
           onChange={(e) => handleChange(e)}
           onBlur={(e) => handleBlur(e)}
-        />
-        {suffixElement ? (
-          <InputRightElement
-            onClick={onSuffixClick}
-          >
-            {suffixElement}
-          </InputRightElement>
-        ) : null}
+        >
+          {options.map((flag, idx) => (
+            <option key={idx} value={flag.value}>{flag.label}</option>
+          ))}
+        </Select>
       </InputGroup>
       <Text fontSize={'small'} color={'red'}>{errorMsg || null}</Text>
     </FormControl>
