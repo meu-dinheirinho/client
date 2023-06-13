@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useContext,
   useEffect, useRef, useState,
 } from 'react';
@@ -21,70 +22,36 @@ import { creditCardSchema, initialValues } from './schemas';
 import { CARD_NUMBER_PATTERN } from '../../constants';
 import useLoading from '../../hooks/loading';
 import { SessionContext } from '../../context/session';
-import { CreditCardService } from '../../services';
-// //  TODO: REMOVER
-// const mockedData = [
-//   {
-//     id: 1,
-//     description: 'Cartão 1',
-//     cardNumber: '5477 5125 3556 3388',
-//     flag: 'master',
-//     invoiceClosingDate: '',
-//     invoiceDueDate: '',
-//     limit: 0,
-//     isActive: true,
-//   },
-//   {
-//     id: 2,
-//     description: 'Cartão 2',
-//     cardNumber: '4024 0071 8405 5464',
-//     flag: 'visa',
-//     invoiceClosingDate: '',
-//     invoiceDueDate: '',
-//     limit: 0,
-//     isActive: false,
-//   },
-//   {
-//     id: 3,
-//     description: 'Cartão 3',
-//     cardNumber: '5477 5125 3556 3388',
-//     flag: 'master',
-//     invoiceClosingDate: '',
-//     invoiceDueDate: '',
-//     limit: 0,
-//     isActive: false,
-//   },
-//   {
-//     id: 4,
-//     description: 'Cartão 4',
-//     cardNumber: '4024 0071 8405 5464',
-//     flag: 'visa',
-//     invoiceClosingDate: '',
-//     invoiceDueDate: '',
-//     limit: 0,
-//     isActive: false,
-//   },
-// ];
+import { CreditCardService, WalletService } from '../../services';
 
 export default function MyWalletComponent() {
-  const [accountList, setAccountList] = useState([]);
   const [brandOptionsList, setBrandOptionsList] = useState([]);
+  const [walletsList, setWalletsList] = useState([]);
+  const [cardList, setCardList] = useState([]);
   const [loading, start, done] = useLoading();
   // hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const toast = useToast();
-  const { token } = useContext(SessionContext);
+  const { token, userId } = useContext(SessionContext);
 
-  // TODO: ALTERAR PARA REQUISIÇÃO
-  // const refresh = useCallback((data) => {
-  //   setAccountList(data);
-  // }, []);
+  const refresh = useCallback(() => {
+    const creditCardService = new CreditCardService(token);
+    creditCardService.getAll().then(({ creditCards }) => {
+      setCardList(creditCards);
+    }).catch(() => {
+      toast({
+        title: 'Erro ao buscar Cartões',
+        status: 'error',
+        duration: 5000,
+      });
+    });
+  });
 
-  // useEffect(() => {
-  //   refresh(mockedData);
-  // }, [refresh]);
+  useEffect(() => {
+    refresh();
+  }, []);
 
   useEffect(() => {
     const optionsList = CARD_NUMBER_PATTERN.map((item) => ({
@@ -95,8 +62,22 @@ export default function MyWalletComponent() {
     setBrandOptionsList(optionsList);
   }, []);
 
+  useEffect(() => {
+    const listAllWallet = new WalletService(token);
+    listAllWallet.getAll().then(({ wallets }) => {
+      const list = wallets.map((item) => ({ label: item.name, value: item.id }));
+      setWalletsList(list);
+    }).catch(() => {
+      toast({
+        title: 'Erro ao buscar contas',
+        status: 'error',
+        duration: 5000,
+      });
+    });
+  }, []);
+
   function handleSelectCard(accountId) {
-    setAccountList((prev) => {
+    setCardList((prev) => {
       const newData = prev.map((item) => ({
         ...item,
         isActive: item.id === accountId,
@@ -106,9 +87,14 @@ export default function MyWalletComponent() {
   }
 
   function store(data) {
+    const parseData = {
+      ...data,
+      id_wallet: Number(data.id_wallet),
+    };
+
     start();
     const creditCardService = new CreditCardService(token);
-    creditCardService.store(data).then(() => {
+    creditCardService.store(parseData, userId).then(() => {
       toast({
         title: 'Tudo Certo',
         description: 'Cartão salvo com sucesso',
@@ -175,7 +161,7 @@ export default function MyWalletComponent() {
       >
         <GridItem>
           <CreditCard
-            accounts={accountList}
+            accounts={cardList}
             onSelectedCard={(accountId) => handleSelectCard(accountId)}
           />
         </GridItem>
@@ -222,6 +208,20 @@ export default function MyWalletComponent() {
                     <>
                       <Stack spacing={10}>
                         <Grid templateColumns={['1fr 1fr', '1fr 1fr', '1fr 1fr 1fr']} gap={3}>
+                          <GridItem>
+                            <FormSelectInput
+                              placeholder="Selecione uma conta"
+                              variant={'filled'}
+                              size={'lg'}
+                              name={'id_wallet'}
+                              id={'id_wallet'}
+                              value={values.id_wallet}
+                              options={walletsList}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              errorMsg={touched.id_wallet && errors.id_wallet}
+                            />
+                          </GridItem>
                           <GridItem>
                             <FormInput
                               size={'lg'}

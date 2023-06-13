@@ -10,8 +10,10 @@ export default class CreditCardService {
 
     return new Promise((resolve, reject) => {
       const clientX = privClient(this.token);
-      // request
-      clientX.post(path, dataCard).then((resp) => {
+      const reqData = {
+        ...dataCard,
+      };
+      clientX.post(path, reqData).then((resp) => {
         const { data } = resp;
         resolve(data);
       }).catch((e) => reject(e));
@@ -19,7 +21,7 @@ export default class CreditCardService {
   }
 
   getAll() {
-    const path = 'wallet';
+    const path = 'creditCard';
     return new Promise((resolve, reject) => {
       const clientX = privClient(this.token);
       // request

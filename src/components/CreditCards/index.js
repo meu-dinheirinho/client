@@ -15,9 +15,8 @@ export default function CreditCard({
         accounts && accounts.map((account, idx) => (
           <Card
             key={`${account.id} - ${idx}`}
-            cardName={account.description}
-            cardNumber={account.cardNumber}
-            cardFlag={account.flag}
+            cardName={account.alias}
+            cardNumber={account.last_four_number}
             isActive={account.isActive}
             onClick={() => handleClick(account.id)}
           />

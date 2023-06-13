@@ -7,7 +7,6 @@ export default class WalletService {
 
   create(dataWallet) {
     const path = 'wallet';
-
     return new Promise((resolve, reject) => {
       const clientX = privClient(this.token);
       // request

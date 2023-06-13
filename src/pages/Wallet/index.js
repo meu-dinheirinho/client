@@ -85,8 +85,16 @@ export default function Wallet() {
   }
 
   function handleCreateWallet(dataWallet) {
+    const newData = {
+      ...dataWallet,
+      id_user: '',
+      favorite: isChecked ? '1' : '0',
+      color,
+      current_value: dataWallet.current_value.toFixed(2),
+    };
+
     const walletService = new WalletService(token);
-    walletService.create(dataWallet).then(() => {
+    walletService.create(newData).then(() => {
       toast({
         title: 'Conta criada com sucesso',
         status: 'success',
@@ -94,12 +102,24 @@ export default function Wallet() {
       });
       onClose(onClose);
       refresh();
+    }).catch(() => {
+      toast({
+        title: 'Falha ao criar conta',
+        status: 'error',
+        duration: 5000,
+      });
     });
   }
 
   function updateWallet(account) {
+    const newData = {
+      ...account,
+      color,
+      current_value: account.current_value.toFixed(2),
+    };
+
     const walletService = new WalletService(token);
-    walletService.update(account).then(() => {
+    walletService.update(newData).then(() => {
       onClose(onClose);
       refresh();
       setColor('');
@@ -108,25 +128,12 @@ export default function Wallet() {
 
   function verifyId(data) {
     if (data.id) {
-      const newData = {
-        ...data,
-        color,
-      };
-
-      updateWallet(newData);
+      updateWallet(data);
       setColor('');
       return;
     }
 
-    const newData = {
-      ...data,
-      id_user: '',
-      favorite: isChecked ? '1' : '0',
-      color,
-      current_value: parseFloat(data.current_value),
-    };
-
-    handleCreateWallet(newData);
+    handleCreateWallet(data);
     setInitialData(initialValues);
   }
 
@@ -275,7 +282,7 @@ export default function Wallet() {
                   <FormControl width={'25%'}>
                     <FormInput
                       size={'md'}
-                      type={'text'}
+                      type={'number'}
                       placeholder={'Saldo Inicial'}
                       variant={'outline'}
                       name={'current_value'}

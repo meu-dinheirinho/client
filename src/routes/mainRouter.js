@@ -17,11 +17,10 @@ export default function MainRouter() {
   const navigate = useNavigate();
   // context
   const { token, updateData } = useContext(SessionContext);
-
   // internal state
   const [logged, setLogged] = useState(!!token);
 
-  function login(tkn) {
+  function login(tkn, userId) {
     // set to cookie
     setCookieToken(tkn);
     // set like logged
@@ -29,6 +28,7 @@ export default function MainRouter() {
     //
     updateData({
       token: tkn,
+      userId,
       version: 'v0',
     });
     // navigate
@@ -41,7 +41,7 @@ export default function MainRouter() {
         {logged ? (
           <Route path={'/*'} element={(<PrivRouter />)} />
         ) : (
-          <Route path={'/*'} element={(<PubRouter onSuccess={(tkn) => login(tkn)} />)} />
+          <Route path={'/*'} element={(<PubRouter onSuccess={(tkn, userId) => login(tkn, userId)} />)} />
         )}
       </Routes>
     </div>

@@ -9,7 +9,7 @@ export const SessionContext = createContext();
 // Crie um provedor para o contexto
 export function ContextProvider({ children }) {
   const [data, setData] = useState(() => {
-    const storedData = getCookieToken() || { token: '' };
+    const storedData = getCookieToken() || { token: '', userId: '' };
     return storedData;
   });
 

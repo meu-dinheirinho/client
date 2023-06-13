@@ -40,7 +40,7 @@ export default function LoginPage({
     start();
     const authService = new AuthService();
     authService.login(usrData).then(({ data }) => {
-      if (onSuccess) onSuccess(data.token);
+      if (onSuccess) onSuccess(data.token, data.userId);
       toast({
         title: 'Login',
         description: 'Bem vindo!',

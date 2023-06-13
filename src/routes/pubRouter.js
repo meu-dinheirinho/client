@@ -12,8 +12,9 @@ export default function PubRouter({ onSuccess }) {
   // navigation
   const navigate = useNavigate();
 
-  function handleLogin(token) {
-    if (onSuccess) onSuccess(token);
+  function handleLogin(token, userId) {
+    console.log('>>>>>>', token, userId);
+    if (onSuccess) onSuccess(token, userId);
   }
 
   function handleRegister() {
@@ -24,7 +25,7 @@ export default function PubRouter({ onSuccess }) {
     <LayoutLogin>
       <Routes>
         {/* login stack */}
-        <Route path={'login'} element={(<LoginPage onSuccess={(token) => handleLogin(token)} />)} />
+        <Route path={'login'} element={(<LoginPage onSuccess={(token, userId) => handleLogin(token, userId)} />)} />
         <Route path={'register'} element={(<RegisterPage onRegister={() => handleRegister()} />)} />
         <Route path={'recovery'} element={(<RecoveryPage />)} />
         <Route path={'components'} element={(<ComponentPage />)} />
