@@ -19,13 +19,11 @@ import {
 } from '../../components';
 import { sortByProperty } from '../../utils';
 import { creditCardSchema, initialValues } from './schemas';
-import { CARD_NUMBER_PATTERN } from '../../constants';
 import useLoading from '../../hooks/loading';
 import { SessionContext } from '../../context/session';
 import { CreditCardService, WalletService } from '../../services';
 
 export default function MyWalletComponent() {
-  const [brandOptionsList, setBrandOptionsList] = useState([]);
   const [walletsList, setWalletsList] = useState([]);
   const [cardList, setCardList] = useState([]);
   const [loading, start, done] = useLoading();
@@ -51,15 +49,6 @@ export default function MyWalletComponent() {
 
   useEffect(() => {
     refresh();
-  }, []);
-
-  useEffect(() => {
-    const optionsList = CARD_NUMBER_PATTERN.map((item) => ({
-      label: item.name,
-      value: item.name,
-    }));
-
-    setBrandOptionsList(optionsList);
   }, []);
 
   useEffect(() => {
@@ -228,12 +217,12 @@ export default function MyWalletComponent() {
                               type={'text'}
                               placeholder={'Descrição'}
                               variant={'filled'}
-                              name={'description'}
-                              id={'description'}
-                              value={values.description}
+                              name={'alias'}
+                              id={'alias'}
+                              value={values.alias}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              errorMsg={touched.description && errors.description}
+                              errorMsg={touched.alias && errors.alias}
                             />
                           </GridItem>
                           <GridItem>
@@ -242,26 +231,12 @@ export default function MyWalletComponent() {
                               type={'number'}
                               placeholder={'Numero do cartão'}
                               variant={'filled'}
-                              name={'cardNumber'}
-                              id={'cardNumber'}
-                              value={values.cardNumber}
+                              name={'last_four_digits'}
+                              id={'last_four_digits'}
+                              value={values.last_four_digits}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              errorMsg={touched.cardNumber && errors.cardNumber}
-                            />
-                          </GridItem>
-                          <GridItem>
-                            <FormSelectInput
-                              placeholder="Selecione uma bandeira"
-                              variant={'filled'}
-                              size={'lg'}
-                              name={'flag'}
-                              id={'flag'}
-                              value={values.flag}
-                              options={brandOptionsList}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              errorMsg={touched.flag && errors.flag}
+                              errorMsg={touched.last_four_digits && errors.last_four_digits}
                             />
                           </GridItem>
                           <GridItem>
@@ -270,12 +245,12 @@ export default function MyWalletComponent() {
                               type={'number'}
                               placeholder={'Limite'}
                               variant={'filled'}
-                              name={'limit'}
-                              id={'limit'}
-                              value={values.limit}
+                              name={'limit_value'}
+                              id={'limit_value'}
+                              value={values.limit_value}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              errorMsg={touched.limit && errors.limit}
+                              errorMsg={touched.limit_value && errors.limit_value}
                             />
                           </GridItem>
                           <GridItem>
@@ -284,12 +259,12 @@ export default function MyWalletComponent() {
                               type={'number'}
                               placeholder={'Dia do fechamento'}
                               variant={'filled'}
-                              name={'invoiceClosingDate'}
-                              id={'invoiceClosingDate'}
-                              value={values.invoiceClosingDate}
+                              name={'closing_date'}
+                              id={'closing_date'}
+                              value={values.closing_date}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              errorMsg={touched.invoiceClosingDate && errors.invoiceClosingDate}
+                              errorMsg={touched.closing_date && errors.closing_date}
                             />
                           </GridItem>
                           <GridItem>
@@ -298,12 +273,12 @@ export default function MyWalletComponent() {
                               type={'number'}
                               placeholder={'Dia do vencimento'}
                               variant={'filled'}
-                              name={'invoiceDueDate'}
-                              id={'invoiceDueDate'}
-                              value={values.invoiceDueDate}
+                              name={'invoice_date'}
+                              id={'invoice_date'}
+                              value={values.invoice_date}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              errorMsg={touched.invoiceDueDate && errors.invoiceDueDate}
+                              errorMsg={touched.invoice_date && errors.invoice_date}
                             />
                           </GridItem>
                         </Grid>
