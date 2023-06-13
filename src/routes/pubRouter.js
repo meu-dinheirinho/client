@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 // pages
 import {
   LoginPage, RecoveryPage, RegisterPage, ComponentPage,
@@ -6,10 +6,18 @@ import {
 // style
 import RedirectRouter from './RedirectRouter';
 import { LayoutLogin } from '../layout';
+import { REDIRECT_LOGIN } from '../constants/others';
 
 export default function PubRouter({ onSuccess }) {
+  // navigation
+  const navigate = useNavigate();
+
   function handleLogin(token) {
     if (onSuccess) onSuccess(token);
+  }
+
+  function handleRegister() {
+    navigate(REDIRECT_LOGIN);
   }
 
   return (
@@ -17,7 +25,7 @@ export default function PubRouter({ onSuccess }) {
       <Routes>
         {/* login stack */}
         <Route path={'login'} element={(<LoginPage onSuccess={(token) => handleLogin(token)} />)} />
-        <Route path={'register'} element={(<RegisterPage />)} />
+        <Route path={'register'} element={(<RegisterPage onRegister={() => handleRegister()} />)} />
         <Route path={'recovery'} element={(<RecoveryPage />)} />
         <Route path={'components'} element={(<ComponentPage />)} />
         {/* request recovery password */}

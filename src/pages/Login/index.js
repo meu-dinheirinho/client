@@ -28,23 +28,23 @@ export default function LoginPage({
   // propagates on auth events
   onSuccess,
 }) {
-  const [hidePassword, setHidePassord] = useState(true);
+  const [hidePassword, setHidePassword] = useState(true);
   const [loading, start, done] = useLoading();
   const toast = useToast();
 
   function handlePasswordInputVisibility() {
-    setHidePassord(!hidePassword);
+    setHidePassword(!hidePassword);
   }
 
   function handleCreateAuth(usrData) {
     start();
     const authService = new AuthService();
-    authService.login(usrData).then((data) => {
-      if (onSuccess) onSuccess(data);
+    authService.login(usrData).then(({ data }) => {
+      if (onSuccess) onSuccess(data.token);
       toast({
         title: 'Login',
         description: 'Bem vindo!',
-        status: 'sucess',
+        status: 'success',
         duration: 5000,
         isClosable: true,
         position: 'top',

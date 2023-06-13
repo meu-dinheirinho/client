@@ -1,1 +1,1 @@
-export { SessionContext } from './session';
+export { ContextProvider, SessionContext } from './session';

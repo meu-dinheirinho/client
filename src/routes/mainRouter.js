@@ -1,24 +1,39 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { SessionContext } from '../context';
 // routes
 import PrivRouter from './privRouter';
 // style
 import styles from './styles.module.css';
 import PubRouter from './pubRouter';
+import { setCookieToken } from '../services/cookies';
+import { REDIRECT_ZERO_PATH } from '../constants/others';
 
 /**
  * MainSwitcher
  */
 export default function MainRouter() {
+  // navigation
+  const navigate = useNavigate();
   // context
-  const { tkn } = useContext(SessionContext);
-  // internal state
-  const [logged, setLogged] = useState(true);
+  const { data, updateData } = useContext(SessionContext);
+  const { token } = data;
 
-  function login(token) {
-    setLogged(!!token);
+  // internal state
+  const [logged, setLogged] = useState(!!token);
+
+  function login(tkn) {
+    // set to cookie
+    setCookieToken(tkn);
+    // set like logged
+    setLogged(true);
+    //
+    updateData({
+      token: tkn,
+      version: 'v0',
+    });
+    // navigate
+    navigate(REDIRECT_ZERO_PATH);
   }
 
   return (
@@ -27,7 +42,7 @@ export default function MainRouter() {
         {logged ? (
           <Route path={'/*'} element={(<PrivRouter />)} />
         ) : (
-          <Route path={'/*'} element={(<PubRouter onSuccess={(token) => login(token)} />)} />
+          <Route path={'/*'} element={(<PubRouter onSuccess={(tkn) => login(tkn)} />)} />
         )}
       </Routes>
     </div>

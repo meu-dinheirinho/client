@@ -1,7 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import { useState } from 'react';
 import { Formik } from 'formik';
-import { FcGoogle } from 'react-icons/fc';
 import {
   FormControl,
   Stack,
@@ -10,7 +9,6 @@ import {
   Flex,
   Heading,
   Text,
-  Center,
   HStack,
   Wrap,
   useToast,
@@ -22,14 +20,16 @@ import styles from './styles.module.css';
 import useLoading from '../../hooks/loading';
 import AuthService from '../../services/auth';
 
-export default function RegisterPage() {
-  const [hidePassword, setHidePassord] = useState(true);
+export default function RegisterPage({
+  onRegister,
+}) {
+  const [hidePassword, setHidePassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
   const [loading, start, done] = useLoading();
   const toast = useToast();
 
   function handlePasswordInputVisibility() {
-    setHidePassord(!hidePassword);
+    setHidePassword(!hidePassword);
   }
 
   function handleConfirmPasswordInputVisibility() {
@@ -42,16 +42,17 @@ export default function RegisterPage() {
     authService.store(userData).then(() => {
       toast({
         title: 'Registro',
-        description: 'Usário cadastrado com sucesso',
-        status: 'sucess',
+        description: 'Usuário cadastrado com sucesso',
+        status: 'success',
         duration: 5000,
         isClosable: true,
         position: 'top',
       });
-    }).catch((error) => {
+      if (onRegister) onRegister();
+    }).catch(() => {
       toast({
         title: 'Registro',
-        description: `Ocorreu um erro ao cadastrar usuário ${error}`,
+        description: 'Ocorreu um erro ao cadastrar usuário.',
         status: 'warning',
         duration: 5000,
         isClosable: true,
@@ -181,15 +182,7 @@ export default function RegisterPage() {
                   }}
                   onClick={handleSubmit}
                 >
-                  Entrar
-                </Button>
-                <Text align={'center'}>
-                  Ou
-                </Text>
-                <Button w={'full'} size={'lg'} variant={'outline'} leftIcon={<FcGoogle />}>
-                  <Center>
-                    <Text>Entre com Google</Text>
-                  </Center>
+                  Registrar
                 </Button>
               </Stack>
             </Stack>
@@ -197,7 +190,7 @@ export default function RegisterPage() {
         </Formik>
         <Stack pt={6}>
           <Text align={'center'}>
-            Já posui conta? &nbsp;
+            Já possui conta? &nbsp;
             <Link
               href={'login'}
               color={'blue.400'}
