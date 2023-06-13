@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const host = 'http://localhost:8080';
+const host = 'http://127.0.0.1:8000';
 
 // create axios api
 const client = () => axios.create({
-  baseURL: `${host}/api`,
+  baseURL: `${host}/api/`,
   headers: {
     'content-type': 'application/json',
   },

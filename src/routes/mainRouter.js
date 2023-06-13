@@ -16,7 +16,7 @@ export default function MainRouter() {
   const { tkn } = useContext(SessionContext);
   // internal state
   // eslint-disable-next-line no-unused-vars
-  const [logged, setLogged] = useState(true);
+  const [logged, setLogged] = useState(false);
 
   function login(token) {
     console.log(token);

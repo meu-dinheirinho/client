@@ -12,44 +12,148 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   Switch,
   Text,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import { useEffect, useState } from 'react';
-import styles from './styles.module.css';
-import { initialValues, registerSchema } from './schemas';
-import { AccountCard, FormInput } from '../../components';
+import {
+  accountTypes, banks, initialValues, registerSchema,
+} from './schemas';
+import { AccountCard, FormInput, Header } from '../../components';
+import WalletService from '../../services/wallet';
 
 export default function Wallet() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [card, setCard] = useState();
+  const [accounts, setAccounts] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [initialData, setInitialData] = useState(initialValues);
+  const [isChecked, setIsChecked] = useState(false);
+  const [color, setColor] = useState('');
+  const toast = useToast();
+
+  function refresh() {
+    const listAllWallet = new WalletService();
+
+    listAllWallet.getAll().then(({ wallets }) => {
+      setAccounts(wallets);
+    }).catch((error) => {
+      toast({
+        title: 'Erro ao buscar contas',
+        description: error,
+        status: 'error',
+        duration: 5000,
+      });
+    });
+  }
+
+  function plainToSchema(obj) {
+    return {
+      ...obj,
+      name: obj.name,
+      account_type: obj.account_type,
+      current_value: obj.current_value,
+    };
+  }
+
+  function openModal(accountId) {
+    if (!accountId) {
+      setInitialData(initialValues);
+      setIsUpdating(false);
+      onOpen();
+      return;
+    }
+
+    const account = accounts.find((acc) => acc.id === accountId);
+    setInitialData(plainToSchema(account));
+    setIsUpdating(true);
+
+    onOpen();
+  }
+
+  function handleSwitch() {
+    setIsChecked(!isChecked);
+  }
+
+  function handleCreateWallet(dataWallet) {
+    const walletService = new WalletService();
+    walletService.create(dataWallet).then((data) => {
+      toast({
+        title: 'Conta criada com sucesso',
+        description: data.message,
+        status: 'success',
+        duration: 5000,
+      });
+      onClose(onClose);
+      refresh();
+    });
+  }
+
+  function updateWallet(account) {
+    const walletService = new WalletService();
+
+    walletService.update(account).then(() => {
+      onClose(onClose);
+      refresh();
+      setColor('');
+    });
+  }
+
+  function verifyId(data) {
+    if (data.id) {
+      // eslint-disable-next-line no-param-reassign
+      data.color = color;
+
+      updateWallet(data);
+      setColor('');
+      return;
+    }
+
+    // eslint-disable-next-line no-param-reassign
+    data.id_user = '';
+    // eslint-disable-next-line no-param-reassign
+    data.favorite = isChecked === true ? '1' : '0';
+    // eslint-disable-next-line no-param-reassign
+    data.color = color;
+    // eslint-disable-next-line no-param-reassign
+    data.current_value = parseFloat(data.current_value);
+
+    handleCreateWallet(data);
+    setInitialData(initialValues);
+  }
 
   useEffect(() => {
-    console.log('mudou o card!');
-  });
+    refresh();
+  }, []);
 
   return (
     <div>
+      <Header title="Minhas Contas" description="Adicione lançamentos e defina metas" />
       <HStack>
         <Flex flexDirection={'column'} minH={'100%'}>
-          <Button onClick={onOpen} my={2} gap={3} variant="outline" bg="var(--gray-200)"><AddIcon boxSize={3} />Adicionar Conta</Button>
-          <AccountCard account="Conta Nubank" typeAccount="Poupança" institution="AB" width={'100%'} value1="200,00" value2="1.200,50" bg="rgba(81, 69, 158, 0.20)" border="#51459E" onclickTitle={() => setCard(1)} />
-          <AccountCard account="Conta Nubank" typeAccount="Poupança" institution="AB" width={'100%'} value1="200,00" value2="1.200,50" bg="rgba(81, 69, 158, 0.20)" border="#51459E" onclickTitle={() => setCard(2)} />
+          <Button onClick={() => openModal()} my={2} gap={3} variant="outline" bg="var(--gray-200)"><AddIcon boxSize={3} />Adicionar Conta</Button>
+          {accounts.map((account) => (
+            <AccountCard account={account.name} typeAccount={account.account_type} institution={account.institution} width={'100%'} value1={account.current_value} value2={account.current_value} bg="rgba(81, 69, 158, 0.20)" border={account.color} onclickTitle={() => console.log(account.color)} onEditAccount={() => openModal(account.id)} key={account.id} />
+          ))}
         </Flex>
         <Flex bg={'red.200'} width={'40%'} minH={'100%'}>
-          {card}
+          {/* {card} */}
         </Flex>
       </HStack>
 
       <Formik
-        initialValues={initialValues}
+        initialValues={initialData}
+        enableReinitialize
         validationSchema={registerSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={(values, actions) => {
+          verifyId(values);
+          actions.resetForm();
         }}
       >
 
@@ -65,7 +169,7 @@ export default function Wallet() {
           <Modal blockScrollOnMount={false} isOpen={isOpen} size="4xl" onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader color="var(--purple)">Nova conta</ModalHeader>
+              <ModalHeader color="var(--purple)">{isUpdating ? 'Editar conta' : 'Nova conta'}</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <HStack mb={4}>
@@ -83,11 +187,20 @@ export default function Wallet() {
                     />
                   </FormControl>
                   <FormControl>
-                    <Select placeholder="Selecione a Instituição" name="institution">
-                      <option value="1">Bradesco</option>
-                      <option value="2">Banco do Brasil</option>
-                      <option value="3">Caixa</option>
-                    </Select>
+                    <Field name="institution">
+                      {({ field }) => (
+                        <Select {...field} placeholder="Selecione a instituição">
+                          {banks.map((bank) => (
+                            <option
+                              value={bank.value}
+                              key={bank.value}
+                            >
+                              {bank.label}
+                            </option>
+                          ))}
+                        </Select>
+                      )}
+                    </Field>
                     <Text fontSize={'small'} color={'red'}>{errors.institution || null}</Text>
                   </FormControl>
                 </HStack>
@@ -106,11 +219,20 @@ export default function Wallet() {
                     />
                   </FormControl>
                   <FormControl>
-                    <Select placeholder="Selecione o tipo de conta" name="account_type">
-                      <option value="1">Conta Poupança</option>
-                      <option value="2">Conta Corrente</option>
-                      <option value="3">Conta de Pagamentos</option>
-                    </Select>
+                    <Field name="account_type">
+                      {({ field }) => (
+                        <Select {...field} placeholder="Selecione o tipo de conta">
+                          {accountTypes.map((type) => (
+                            <option
+                              value={type.value}
+                              key={type.value}
+                            >
+                              {type.label}
+                            </option>
+                          ))}
+                        </Select>
+                      )}
+                    </Field>
                     <Text fontSize={'small'} color={'red'}>{errors.account_type || null}</Text>
                   </FormControl>
                 </HStack>
@@ -130,24 +252,26 @@ export default function Wallet() {
                   </FormControl>
                   <Flex direction="column">
                     <Text fontSize={'small'}>Cor da Conta</Text>
-                    <Flex gap={2}>
-                      <label htmlFor="color1" className={styles.labelInputColor}>
-                        <input type="radio" id="color1" name="color" value="#F9896B" />
-                      </label>
-                      <label htmlFor="color2" className={styles.labelInputColor}>
-                        <input type="radio" id="color2" name="color" value="#84E8F4" />
-                      </label>
-                      <label htmlFor="color3" className={styles.labelInputColor}>
-                        <input type="radio" id="color3" name="color" value="#605DEC" />
-                      </label>
-                      <label htmlFor="color4" className={styles.labelInputColor}>
-                        <input type="radio" id="color4" name="color" value="#EA5A47" />
-                      </label>
-                    </Flex>
+                    <RadioGroup onChange={setColor} value={color || values.color}>
+                      <Stack spacing={5} direction="row">
+                        <Radio colorScheme="orange" value="#F9896B">
+                          Laranja
+                        </Radio>
+                        <Radio colorScheme="cyan" value="#84E8F4">
+                          Azul
+                        </Radio>
+                        <Radio colorScheme="purple" value="#605DEC">
+                          Roxo
+                        </Radio>
+                        <Radio colorScheme="red" value="#EA5A47">
+                          Vermelho
+                        </Radio>
+                      </Stack>
+                    </RadioGroup>
                   </Flex>
                 </HStack>
                 <Stack align="center" direction="row">
-                  <Switch id="email-alerts" size="md" colorScheme="purple" />
+                  <Switch id="email-alerts" size="md" colorScheme="purple" name="favorite" onChange={() => handleSwitch()} />
                   <FormControl display="flex" gap={2} alignItems="center">
                     <FormLabel htmlFor="email-alerts" m={0}>
                       Favoritar conta?
@@ -158,8 +282,17 @@ export default function Wallet() {
 
               <ModalFooter gap={4}>
                 <Button variant="ghost" px={8} onClick={onClose}>Cancelar</Button>
-                <Button colorScheme="blue" mr={3} onClick={handleSubmit} bg="var(--purple)" px={8} disabled={isSubmitting}>
-                  Salvar
+                <Button
+                  colorScheme="blue"
+                  mr={3}
+                  onClick={handleSubmit}
+                  bg="var(--purple)"
+                  px={8}
+                  loadingText="Loading"
+                  spinnerPlacement="start"
+                  disabled={isSubmitting}
+                >
+                  {isUpdating ? 'Alterar Modificações' : 'Salvar'}
                 </Button>
               </ModalFooter>
             </ModalContent>

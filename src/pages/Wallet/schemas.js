@@ -6,9 +6,33 @@ export const initialValues = {
   institution: '',
   description: '',
   current_value: '',
-  account_color: '',
-  favorite_account: '',
+  color: '',
+  favorite: '',
 };
+
+export const banks = [
+  {
+    label: 'Bradesco', value: 1,
+  },
+  {
+    label: 'Banco do Brasil', value: 2,
+  },
+  {
+    label: 'Caixa', value: 3,
+  },
+];
+
+export const accountTypes = [
+  {
+    label: 'Conta Poupança', value: 1,
+  },
+  {
+    label: 'Conta Corrente', value: 2,
+  },
+  {
+    label: 'Conta de Pagamentos', value: 3,
+  },
+];
 
 export const registerSchema = () => Yup.object().shape({
   name: Yup.string().required('Campo obrigatório'),
